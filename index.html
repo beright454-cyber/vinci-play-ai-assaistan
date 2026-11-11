@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Principal Sales Assistant | AI Voice &amp; Chat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-deep: #0b0218;
+      --bg-nebula: #1b0736;
+      --pink-neon: #ff2a85;
+      --purple-neon: #9d4edd;
+      --purple-light: #e0aaff;
+      --glass-bg: rgba(28, 10, 54, 0.68);
+      --glass-border: rgba(255, 42, 133, 0.35);
+      --text-main: #ffffff;
+      --text-muted: #d8c4f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255, 42, 133, 0.28), transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(157, 78, 221, 0.35), transparent 45%),
+        radial-gradient(circle at 50% 50%, #1a0633 0%, #090114 100%);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+      padding-bottom: 90px;
+    }
+
+    /* Galaxy Stars */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 140px 90px, #ffb3d9, transparent),
+        radial-gradient(2px 2px at 260px 160px, #e0aaff, transparent),
+        radial-gradient(1px 1px at 380px 50px, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 500px 220px, #ff66b2, transparent);
+      background-size: 550px 300px;
+      opacity: 0.55;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Header */
+    header {
+      position: relative;
+      z-index: 2;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--pink-neon), var(--purple-neon));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 25px rgba(255, 42, 133, 0.45);
+      flex-shrink: 0;
+    }
+
+    .brand-text h1 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ffffff, #ff85c0, #e0aaff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.15;
+    }
+
+    .brand-text span {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: rgba(255, 42, 133, 0.28);
+      border: 1px solid rgba(255, 42, 133, 0.5);
+      padding: 2px 10px;
+      border-radius: 999px;
+      margin-top: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      backdrop-filter: blur(10px);
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #80ffdb;
+      box-shadow: 0 0 0 4px rgba(128, 255, 219, 0.25);
+    }
+
+    /* Main Layout */
+    main {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px 32px 48px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .hero-info h2 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.6rem;
+      line-height: 1.15;
+      color: #ffffff;
+      margin-bottom: 16px;
+    }
+
+    .hero-info h2 .highlight {
+      background: linear-gradient(90deg, #ff2a85, #e0aaff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-info p {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+      margin-bottom: 26px;
+      font-weight: 500;
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .mode-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .mode-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--pink-neon);
+      box-shadow: 0 10px 28px rgba(255, 42, 133, 0.28);
+    }
+
+    .mode-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      background: linear-gradient(135deg, var(--pink-neon), var(--purple-neon));
+      box-shadow: 0 0 14px rgba(255, 42, 133, 0.4);
+      font-size: 1.2rem;
+    }
+
+    .mode-card h3 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.1rem;
+      color: #ffffff;
+    }
+
+    .mode-card p {
+      font-size: 0.88rem;
+      line-height: 1.45;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .feature-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: #ffffff;
+      backdrop-filter: blur(8px);
+    }
+
+    .tag-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .agent-card {
+      background: var(--glass-bg);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 36px 28px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(14px);
+    }
+
+    .agent-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--pink-neon), var(--purple-neon), #e0aaff);
+    }
+
+    .vinci-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--pink-neon), var(--purple-neon));
+      color: #ffffff;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      margin-bottom: 14px;
+      box-shadow: 0 6px 16px rgba(255, 42, 133, 0.35);
+    }
+
+    .agent-card h3 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.55rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .agent-card p {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      max-width: 340px;
+      line-height: 1.6;
+    }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 18px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    @media (max-width: 880px) {
+      main {
+        grid-template-columns: 1fr;
+        padding: 16px 20px 40px;
+      }
+      .hero-info h2 {
+        font-size: 2rem;
+      }
+      .mode-grid {
+        grid-template-columns: 1fr;
+      }
+      header {
+        padding: 16px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <div class="logo-box" aria-label="Principal Sales Assistant Logo">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a3 3 0 0 0-3 3v1H6a2 2 0 0 0-2 2v3h16V8a2 2 0 0 0-2-2h-3V5a3 3 0 0 0-3-3z"/>
+          <path d="M4 11v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/>
+          <circle cx="9" cy="14" r="1" fill="#ff85c0" stroke="none"/>
+          <circle cx="15" cy="14" r="1" fill="#ff85c0" stroke="none"/>
+          <path d="M9.5 17.5c1.5 1 3.5 1 5 0"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>Principal Sales Assistant</h1>
+        <span>Vinci Play AI Assistant</span>
+      </div>
+    </div>
+
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      <span>Voice &amp; Chat Online</span>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <section class="hero-info">
+      <h2>
+        Your Smart <span class="highlight">Playground</span> &amp; Sales Advisor
+      </h2>
+      <p>
+        Connect with our trained AI Sales Assistant for instant help with playground equipment, safety standards, custom designs, pricing, and project planning.
+      </p>
+
+      <div class="mode-grid">
+        <div class="mode-card">
+          <div class="mode-icon">📞</div>
+          <h3>AI Call Assistant</h3>
+          <p>Start a live voice conversation using your microphone for hands-free product advice.</p>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-icon">💬</div>
+          <h3>AI Live Chatbot</h3>
+          <p>Type your questions anytime to get fast answers on specs, quotes, and installation.</p>
+        </div>
+      </div>
+
+      <div class="feature-tags">
+        <div class="tag"><span class="tag-dot" style="background: #ff2a85;"></span> Product Guidance</div>
+        <div class="tag"><span class="tag-dot" style="background: #e0aaff;"></span> Instant Quotes</div>
+        <div class="tag"><span class="tag-dot" style="background: #80ffdb;"></span> 24/7 Support</div>
+      </div>
+    </section>
+
+    <section class="agent-card">
+      <div class="vinci-badge">VINCI AI AGENT</div>
+      <h3>Start a Call or Chat</h3>
+      <p>
+        Click the floating <strong>VINCI</strong> AI Assistant icon in the bottom-right corner to begin a live voice call or chat with our trained sales agent.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 Principal Sales Assistant &bull; Vinci Play AI Assistant
+  </footer>
+
+  <!-- ElevenLabs Floating Widget (Bottom-Right Corner) -->
+  <elevenlabs-convai
+    agent-id="agent_3401m753e5qxfe5vhabxxqa3mqan"
+    avatar-image-url="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23ec4899'/><stop offset='100%' stop-color='%238b5cf6'/></linearGradient></defs><circle cx='60' cy='60' r='60' fill='url(%23g)'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' fill='%23ffffff' font-family='Arial, sans-serif' font-weight='bold' font-size='28' letter-spacing='2'>VINCI</text></svg>">
+  </elevenlabs-convai>
+
+  <!-- ElevenLabs Convai Widget Script -->
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+</body>
+</html>
